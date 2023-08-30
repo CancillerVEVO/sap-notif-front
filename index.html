@@ -4,13 +4,35 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Notifications</title>
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
+    <link href="https://css.gg/css" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div id="app">
-      <h1>Notifications</h1>
-      <button type="button" id="logout-button">Log out</button>
+    <div class="sidebar" data-sidebar-state="closed">
+      <ul id="sidebar-list"></ul>
     </div>
 
+    <header class="header">
+      <button type="button" class="menu-button">
+        <i class="gg-menu-oreos menu-icon"></i>
+      </button>
+      <h1 class="header-title">Notifications Prototype</h1>
+      <div class="controller">
+        <button type="button" class="header-notifier">
+          <i class="gg-bell notifier-bell"></i>
+          <span class="notifier-badge" id="notifier-badge"></span>
+        </button>
+
+        <button type="button" id="logout-button">Log out</button>
+      </div>
+    </header>
+
+    <div id="notif-sidebar" class="notif-sidebar" data-sidebar-state="closed">
+      <ul id="notif-sidebar-list" class="notif-sidebar-list"></ul>
+    </div>
+
+    <section id="posts-list"></section>
     <script type="module" src="index.js"></script>
   </body>
 </html>
