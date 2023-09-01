@@ -6,6 +6,11 @@ const notificationItem = ({ id, content, createdAt, isOpened }) => {
         <div class="notification-status" data-notification-status="${isOpened}">${
     isOpened ? "Opened" : "Unopened"
   }</div>
+  ${
+    !isOpened
+      ? ` <button class="notification-button" data-notification-id="${id}">READ</button>`
+      : ""
+  }
       </li>
     `;
 };

@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     itemElement.innerHTML = sidebarItem(item);
     sidebarList.appendChild(itemElement);
   });
-  notifierBadge.innerText = unread.length;
+  notifierBadge.innerText = unread.length > 0 ? unread.length : "";
 
   data.posts.forEach((item) => {
     const itemElement = document.createElement("div");
@@ -44,7 +44,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     itemElement.innerHTML = notificationItem(item);
     notifSidebarList.appendChild(itemElement);
   });
-  console.log(data);
 });
 
 const logoutButton = document.getElementById("logout-button");
@@ -96,5 +95,47 @@ notifierButton.addEventListener("click", () => {
     notifSidebar.setAttribute("data-sidebar-state", "open");
   } else {
     notifSidebar.setAttribute("data-sidebar-state", "closed");
+  }
+});
+
+notifSidebarList.addEventListener("click", async (event) => {
+  const button = event.target;
+  if (
+    button.tagName === "BUTTON" &&
+    button.getAttribute("data-notification-id")
+  ) {
+    const id = button.getAttribute("data-notification-id");
+
+    try {
+      const response = await fetch(
+        `http://localhost:3002/api/profile/notifications/markAsOpened`,
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            notificationId: id,
+          }),
+        }
+      );
+
+      const { data } = await response.json();
+
+      const unread = data.notifications.filter((notif) => !notif.isOpened);
+
+      notifSidebarList.innerHTML = "";
+
+      data.notifications.forEach((item) => {
+        const itemElement = document.createElement("li");
+        itemElement.innerHTML = notificationItem(item);
+        notifSidebarList.appendChild(itemElement);
+      });
+
+      notifierBadge.innerText = unread.length > 0 ? unread.length : "";
+    } catch (error) {
+      console.error(error);
+    }
   }
 });
