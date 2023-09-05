@@ -27,10 +27,12 @@
   color: white;
 }
 /* Sidebar */
+
 .menu-button {
   padding: 1rem;
   background: none;
   border: none;
+  z-index: 20;
 }
 
 .sidebar {

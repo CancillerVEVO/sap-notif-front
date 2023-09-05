@@ -1,4 +1,5 @@
 import verifySession from "../utils/session";
+import socket from "../utils/socket";
 
 const loginForm = document.getElementById("login-form");
 
@@ -18,14 +19,13 @@ loginForm.addEventListener("submit", async (e) => {
     const headers = new Headers();
     headers.append("Content-Type", "application/json");
     headers.append("Accept", "application/json");
-    const response = await fetch("http://localhost:3002/api/auth/login", {
+    await fetch("http://localhost:3002/api/auth/login", {
       method: "POST",
       headers,
       credentials: "include",
       body: JSON.stringify({ email, password }),
     });
 
-    const data = await response.json();
     window.location.href = "/";
   } catch (error) {
     console.error(error);

@@ -1,13 +1,18 @@
+import socket from "./socket";
+
 const verifySession = async () => {
   if (!document.cookie.includes("token")) {
     return false;
   }
 
   try {
-    await fetch("http://localhost:3002/api/auth/me", {
+    const response = await fetch("http://localhost:3002/api/auth/me", {
       method: "GET",
       credentials: "include",
     });
+    const { data } = await response.json();
+
+    socket.emit("login", data);
 
     return true;
   } catch (error) {
